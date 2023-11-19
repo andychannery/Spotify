@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+python-dotenv = "*"
+flask = "*"
+requests = "*"
+flask-oauthlib = "*"
+werkzeug = "==2.3.7"
+spotipy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
