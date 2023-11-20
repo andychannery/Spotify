@@ -213,7 +213,7 @@ def get_track_features(token, track_ids):
     # json to pandas dataframe    
     return df
 
-
+'''
 # Returns DataFrame of user's top item
 def get_user_top_items(token, item='tracks'):
     
@@ -250,7 +250,8 @@ def get_user_top_items(token, item='tracks'):
     
     # json to pandas dataframe    
     return df
-
+'''
+    
 if __name__ == "__main__":    
     like_playlist = get_playlist_tracks(get_token(), os.getenv("LIKE_PLAYLIST_ID"))
     like_playlist['label'] = True
