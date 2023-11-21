@@ -1,11 +1,9 @@
-# import other files
-import sys
-sys.path.append("..")
 # environment variables
 from dotenv import load_dotenv
 import os
 # fetch functions
-from etl.fetch import *
+from etl.fetch import get_token, get_playlist_tracks, get_track_features
+from etl.write import write_to_playlist
 # working with data
 import numpy as np
 import pandas as pd
@@ -30,31 +28,28 @@ def get_discover_weekly():
     
     # get audio features for discover weekly tracks
     track_ids = ','.join(discover_weekly.track_id.to_list())
-    track_features = get_track_features(token, track_ids).drop(columns=['analysis_url', 'track_href', 'type', 'uri'])
+    track_features = get_track_features(token, track_ids).drop(columns=['analysis_url', 'track_href', 'type'])
 
     # Build final dataframe
     df = discover_weekly.merge(track_features, how='inner', left_on='track_id', right_on='id').drop(columns=['id'])
     return df
 
-# fetch corresponding audio features
-
-# make inference on discover weekly playlist
-# y_pred = loaded_model.predict(X)
-
-# create write.py module
-
-# add songs to predicted like and predicted dislike playlists
-
-# automate process with lambda and eventbridge
 
 if __name__ == "__main__":
     # load in model
-    rf = pickle.load(open('rf.sav', 'rb'))
-    xgb = pickle.load(open('xgb.sav', 'rb'))
+    rf = pickle.load(open('ml_models/rf.sav', 'rb'))
+    xgb = pickle.load(open('ml_models/xgb.sav', 'rb'))
     
+    # fetch discover weekly playlist
     discover_weekly = get_discover_weekly()
 
-    y_pred = rf.predict(discover_weekly)
+    # make inference
+    y_pred = rf.predict(discover_weekly.drop(columns=['artist_id', 'track_id', 'track_name', 'uri']))
+    pred_like = discover_weekly[y_pred.astype(bool)]
+    pred_dislike = discover_weekly[(1 - y_pred).astype(bool)]
 
+    # add predicted like songs to predicted like playlist
+    write_to_playlist(get_token(), pred_like.uri.to_list(), os.getenv('PREDICTED_LIKE_ID'))
 
-
+    # add predicted dislike songs to predicted dislike playlist
+    write_to_playlist(get_token(), pred_dislike.uri.to_list(), os.getenv('PREDICTED_DISLIKE_ID'))

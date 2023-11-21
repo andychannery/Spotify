@@ -1,7 +1,5 @@
-# environment variables
-from dotenv import load_dotenv
-import dotenv
-import os
+# common module
+from etl.common import *
 # api
 import requests
 # reading data
@@ -15,43 +13,6 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-
-# Load in env variables from .env file
-load_dotenv()
-
-client_id = os.getenv("CLIENT_ID")
-client_secret = os.getenv("CLIENT_SECRET")
-access_token = os.getenv("ACCESS_TOKEN")
-refresh_token = os.getenv("REFRESH_TOKEN")
-expires_at = os.getenv("EXPIRES_AT") # TODO: Implement expiry logic for refresh token
-
-
-# Returns authorization header
-def get_auth_header(token):
-    return {"Authorization": f"Bearer {token}"}
-
-# Returns API token
-def get_token():
-    url = "https://accounts.spotify.com/api/token"
-    request_body = {
-        "grant_type": "refresh_token",
-        "refresh_token": refresh_token,
-        "client_id": client_id,
-        "client_secret": client_secret,
-    }
-
-    response = requests.post(url, data=request_body)
-    new_token_info = response.json()
-
-    dotenv_file = dotenv.find_dotenv()
-    dotenv.load_dotenv(dotenv_file)
-
-    os.environ["ACCESS_TOKEN"] = new_token_info['access_token']
-
-    # Write changes to .env file.
-    dotenv.set_key(dotenv_file, "ACCESS_TOKEN", os.environ["ACCESS_TOKEN"])
-
-    return new_token_info['access_token']
 
 
 # Returns DataFrame of tracks given a playlist id
@@ -184,49 +145,3 @@ def get_track_features(token, track_ids):
     
     # json to pandas dataframe    
     return df
-
-'''
-# Returns DataFrame of user's top item
-def get_user_top_items(token, item='tracks'):
-    
-    # Returns a pandas dataframe with the user's top items:
-    #     - tracks
-    #     - artists
-    
-    url = f"https://api.spotify.com/v1/me/top/tracks"
-    headers = get_auth_header(token)    
-    final_result = []
-    offset = 0
-    limit = 50
-    
-    logging.info(f"Fetching user's top {item}...")
-    
-    while True:        
-        query_params = {
-            "limit": 50,
-            "offset": 0,
-        }
-        try:
-            result = requests.get(url, headers=headers, params=query_params)        
-            json_result = json.loads(result.content)["audio_features"]
-            final_result.extend(json_result)
-        except requests.exceptions.RequestException as err:
-            logging.error(f"Failed to fetch top {item}: {err}")
-            return None
-        
-        if json_result < limit:
-            break
-        offset += 50
-    
-    df = pd.json_normalize(final_result)
-    
-    # json to pandas dataframe    
-    return df
-'''
-    
-if __name__ == "__main__":    
-    like_playlist = get_playlist_tracks(get_token(), os.getenv("LIKE_PLAYLIST_ID"))
-    like_playlist['label'] = True
-    dislike_playlist = get_playlist_tracks(get_token(), os.getenv("DISLIKE_PLAYLIST_ID"))
-    dislike_playlist['label'] = False
-    final_playlist = pd.concat([like_playlist, dislike_playlist])
