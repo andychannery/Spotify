@@ -53,34 +53,6 @@ def get_token():
 
     return new_token_info['access_token']
 
-# Returns DataFrame of playlist ids given a user's id
-def get_user_playlists(token, user_id):
-    '''
-    TODO: Can loop through offsets of 50 to fetch more playlists all at once
-    Given a user_id, returns a pandas dataframe with the following attributes:
-        - playlist_id
-    '''
-    url = f"https://api.spotify.com/v1/users/{user_id}/playlists"
-    headers = get_auth_header(token)
-    query = "?fields=items(id)&limit=50&offset=0"
-    query_url = url + query
-    logging.info(f"Fetching playlists...")
-    result = requests.get(query_url, headers=headers)
-    if result.status_code == 200: 
-        json_result = json.loads(result.content)["items"]
-    else:
-        logging.error(f"Failed to fetch playlists: {result.text}")
-        raise
-    
-    # json to pandas dataframe
-    df = pd.json_normalize(json_result)    
-    
-    # rename columns
-    cur_colnames = list(df.columns)
-    new_colnames = ["playlist_id"]
-    map_colnames = {cur_name : new_name for cur_name, new_name in zip(cur_colnames, new_colnames)}
-    df.rename(columns=map_colnames, inplace=True) 
-    return df
 
 # Returns DataFrame of tracks given a playlist id
 def get_playlist_tracks(token, playlist_id):
