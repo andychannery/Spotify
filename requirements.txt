@@ -5,3 +5,7 @@ requests
 Flask-OAuthlib
 Werkzeug==2.3.7
 spotipy
+scikit-learn
+matplotlib
+xgboost
+pickle

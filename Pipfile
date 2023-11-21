@@ -11,6 +11,9 @@ requests = "*"
 flask-oauthlib = "*"
 werkzeug = "==2.3.7"
 spotipy = "*"
+scikit-learn = "*"
+matplotlib = "*"
+xgboost = "*"
 
 [dev-packages]
 
