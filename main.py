@@ -44,12 +44,14 @@ if __name__ == "__main__":
     discover_weekly = get_discover_weekly()
 
     # make inference
-    y_pred = rf.predict(discover_weekly.drop(columns=['artist_id', 'track_id', 'track_name', 'uri']))
-    pred_like = discover_weekly[y_pred.astype(bool)]
-    pred_dislike = discover_weekly[(1 - y_pred).astype(bool)]
+    y_pred_rf = rf.predict(discover_weekly.drop(columns=['artist_id', 'track_id', 'track_name', 'uri', 'mode', 'time_signature']))
+    y_pred_xgb = xgb.predict(discover_weekly.drop(columns=['artist_id', 'track_id', 'track_name', 'uri', 'mode', 'time_signature']))
 
-    # add predicted like songs to predicted like playlist
+    pred_like = discover_weekly[y_pred_rf.astype(bool)]
+    pred_dislike = discover_weekly[(1 - y_pred_rf).astype(bool)]
+
+    # # add predicted like songs to predicted like playlist
     write_to_playlist(get_token(), pred_like.uri.to_list(), os.getenv('PREDICTED_LIKE_ID'))
 
-    # add predicted dislike songs to predicted dislike playlist
+    # # add predicted dislike songs to predicted dislike playlist
     write_to_playlist(get_token(), pred_dislike.uri.to_list(), os.getenv('PREDICTED_DISLIKE_ID'))
