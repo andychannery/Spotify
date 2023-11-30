@@ -12,7 +12,7 @@ client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 access_token = os.getenv("ACCESS_TOKEN")
 refresh_token = os.getenv("REFRESH_TOKEN")
-expires_at = os.getenv("EXPIRES_AT") # TODO: Implement expiry logic for refresh token
+expires_at = os.getenv("EXPIRES_AT")
 
 
 # Returns authorization header

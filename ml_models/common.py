@@ -1,6 +1,8 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
+
+####### EDA common functions #######
 
 def missing_data_check(df):
     total = df.isnull().sum()
@@ -28,3 +30,14 @@ def plot_histograms(df, bins=10):
     plt.tight_layout()
 
     plt.show()
+
+####### Model building common functions #######
+
+# Defining evaluation criteria - accuracy
+def evaluate(model, test_features, test_labels):
+    predictions = model.predict(test_features)
+    errors = abs(predictions - test_labels)
+    mape = np.mean(errors) * 100
+    accuracy = 100 - mape
+    print(f"Average Error: {np.mean(errors) * 100}")
+    print(f"Accuracy = {accuracy}")

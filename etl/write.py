@@ -4,7 +4,6 @@ from etl.common import *
 import requests
 # reading data
 import json
-import pandas as pd
 # debugging
 import logging
 
