@@ -15,3 +15,9 @@ As of: 11/11/2023
 5. Deploying
 
 ## Blog
+https://medium.com/@andychannery/adding-songs-youll-probably-like-automagically-303051539cb6
+Part I: https://medium.com/@andychannery/adding-songs-youll-probably-like-part-i-fetching-song-data-c0b971875eb8
+Part II: https://medium.com/@andychannery/adding-songs-youll-probably-like-part-ii-eda-37a736f60157
+Part III: https://medium.com/@andychannery/adding-songs-youll-probably-like-part-iii-building-a-classification-model-dde7b300f3dd
+Part IV: https://medium.com/@andychannery/adding-songs-youll-probably-like-part-iv-updating-my-personal-playlist-4eef2d02b608
+Part V: https://medium.com/@andychannery/adding-songs-youll-probably-like-part-v-deploying-29ca3c3d1ec9
