@@ -7,6 +7,7 @@ from google.oauth2 import service_account
 import json
 import pandas as pd
 import pandas_gbq
+import base64
 # debugging
 import logging
 
@@ -38,11 +39,16 @@ def write_to_playlist(token, track_uris, playlist_id):
     logging.info(f"Status code: {response.status_code}")
 
 # Write dataframe to BigQuery
-def write_to_bq(df, credentials_path, table_id, project_id, if_exists='replace', table_schema=None):
-    
-    credentials = service_account.Credentials.from_service_account_file(
-        credentials_path,
-    )
+def write_to_bq(df, table_id, project_id, if_exists='replace', table_schema=None):
+
+    # keyfile = get_keyfile()
+    try:
+        credentials = service_account.Credentials.from_service_account_file(
+            'gcp-credentials.json',
+        )
+    except ValueError as e:
+        logging.info(f"Invalid credentials...")
+        logging.info(f"Message: {e}")
 
     logging.info(f"Writing to {project_id}.{table_id}...")
     # Write dataframe to BigQuery
