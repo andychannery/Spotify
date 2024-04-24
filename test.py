@@ -41,7 +41,7 @@ def main():
                 if_exists='replace')
 
 # Not sure if I can also set up DBT to regenerate tables upon raw tables updating via github actions
-# TODO: set up DBT project to create staging tables then eventually mart or dim/facts
+# TODO: set up DBT project to create staging tables then eventually mart or dim/facts 
 
 # TODO: read like and dislike playlists from BQ, retrain model, read discover weekly from BQ, then make inference and write to Spotify
 
