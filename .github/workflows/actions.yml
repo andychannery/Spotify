@@ -2,7 +2,7 @@ name: run test.py
 
 on:
   schedule:
-    - cron: '0 12 ? * MON *' # At 12:00 every Monday
+    - cron: '0 12 * * 1' # At 12:00 every Monday
 
 env:
   BASE64: ${{ secrets.BASE64 }}
