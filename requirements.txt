@@ -1,4 +1,6 @@
 pandas
+pandas-gbq
+google-cloud-bigquery
 python-dotenv
 flask
 requests

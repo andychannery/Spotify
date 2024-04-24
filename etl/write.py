@@ -2,8 +2,11 @@
 from etl.common import *
 # api
 import requests
+from google.oauth2 import service_account
 # reading data
 import json
+import pandas as pd
+import pandas_gbq
 # debugging
 import logging
 
@@ -33,3 +36,21 @@ def write_to_playlist(token, track_uris, playlist_id):
                              )
     
     logging.info(f"Status code: {response.status_code}")
+
+# Write dataframe to BigQuery
+def write_to_bq(df, credentials_path, table_id, project_id, if_exists='replace', table_schema=None):
+    
+    credentials = service_account.Credentials.from_service_account_file(
+        credentials_path,
+    )
+
+    logging.info(f"Writing to {project_id}.{table_id}...")
+    # Write dataframe to BigQuery
+    try:
+        if not table_schema:
+            pandas_gbq.to_gbq(df, credentials=credentials, destination_table=table_id, if_exists=if_exists)
+        else:
+            pandas_gbq.to_gbq(df, credentials=credentials, destination_table=table_id, if_exists=if_exists, table_schema=table_schema)
+    except pandas_gbq.gbq.GenericGBQException as e:
+        logging.info(f"Write failed...")
+        logging.info(f"Message: {e}")

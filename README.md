@@ -14,6 +14,20 @@ As of: 11/11/2023
 4. Update personal playlist
 5. Deploying
 
+As of: 26/03/2024
+1. Retrain model with newly labelled data using f1 score since I care more about not mislabelling
+2. Set up database
+    - BigQuery?
+    - CockroachDB? https://www.cockroachlabs.com/blog/serverless-free/
+3. Frontload song data to database
+    - Manual pipeline via SQLAlchemy?
+    - Airbyte?
+        - Would need to host it somehow... AWS? EC2?
+4. Create flow to update song data after inference
+    - Check which songs I didn't move into liked songs and label as dislike
+    - Retrain model based on new model
+5. Set up DBT project to practice DBT and data modelling
+
 ## Blog
 https://medium.com/@andychannery/adding-songs-youll-probably-like-automagically-303051539cb6
 

@@ -107,6 +107,7 @@ def get_artist_attribute(token, artist_id):
     
     # convert to pandas dataframe
     df = pd.DataFrame(final_result)[['id', 'genres', 'name', 'popularity']]
+    df.genres = df.genres.astype(str)
     df.rename(columns={'id':'artist_id'}, inplace=True)
     df.drop_duplicates(subset=['artist_id'], inplace=True)
     df.reset_index(drop=True, inplace=True)

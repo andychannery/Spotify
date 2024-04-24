@@ -5,6 +5,10 @@ import os
 # api
 import requests
 
+####################################################
+#####################SPOTIFY########################
+####################################################
+
 # Load in env variables from .env file
 load_dotenv()
 
@@ -41,3 +45,22 @@ def get_token():
     dotenv.set_key(dotenv_file, "ACCESS_TOKEN", os.environ["ACCESS_TOKEN"])
 
     return new_token_info['access_token']
+
+####################################################
+#####################BIG QUERY######################
+####################################################
+
+def get_keyfile():
+    variables_keys = {
+        "type": os.getenv("TYPE"),
+        "project_id": os.getenv("PROJECT_ID"),
+        "private_key_id": os.getenv("PRIVATE_KEY_ID"),
+        "private_key": os.getenv("PRIVATE_KEY"),
+        "client_email": os.getenv("CLIENT_EMAIL"),
+        "client_id": os.getenv("CLIENT_ID"),
+        "auth_uri": os.getenv("AUTH_URI"),
+        "token_uri": os.getenv("TOKEN_URI"),
+        "auth_provider_x509_cert_url": os.getenv("AUTH_PROVIDER_X509_CERT_URL"),
+        "client_x509_cert_url": os.getenv("CLIENT_X509_CERT_URL")
+    }
+    return variables_keys
