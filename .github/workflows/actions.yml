@@ -8,7 +8,7 @@ on:
       - opened
       
 env:
-  BASE64: ${{ secrets.BASE64 }}
+  BASE64: ${{ secrets.KEYFILE }}
   DISCOVER_WEEKLY_ID: ${{ secrets.DISCOVER_WEEKLY_ID }}
   PERSONAL_PLAYLIST_ID: ${{ secrets.PERSONAL_PLAYLIST_ID }}
   LIKE_PLAYLIST_ID: ${{ secrets.LIKE_PLAYLIST_ID }}
