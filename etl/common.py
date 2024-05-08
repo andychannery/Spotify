@@ -39,7 +39,7 @@ def get_token():
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
 
-    print(f"Access token in JSON file: {new_token_info['access_token']}")
+    print(f"Access token in JSON file: {new_token_info}")
 
     os.getenv["ACCESS_TOKEN"] = new_token_info['access_token']
 
