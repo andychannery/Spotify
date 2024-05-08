@@ -8,7 +8,6 @@ on:
       - opened
       
 env:
-  BASE64: ${{ secrets.KEYFILE }}
   DISCOVER_WEEKLY_ID: ${{ secrets.DISCOVER_WEEKLY_ID }}
   PERSONAL_PLAYLIST_ID: ${{ secrets.PERSONAL_PLAYLIST_ID }}
   LIKE_PLAYLIST_ID: ${{ secrets.LIKE_PLAYLIST_ID }}
@@ -17,6 +16,17 @@ env:
   PREDICTED_DISLIKE_ID: ${{ secrets.PREDICTED_DISLIKE_ID }}
   ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+  TYPE: ${{ secrets.TYPE }}
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
+  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
+  BQ_CLIENT_ID: ${{ secrets.BQ_CLIENT_ID }}
+  AUTH_URI: ${{ secrets.AUTH_URI }}
+  TOKEN_URI: ${{ secrets.TOKEN_URI }}
+  AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}
+  CLIENT_X509_CERT_URL: ${{ secrets.CLIENT_X509_CERT_URL }}
+  UNIVERSE_DOMAIN: ${{ secrets.UNIVERSE_DOMAIN }}
 
 jobs:
   build:
@@ -34,10 +44,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: decode base64 credentials
-        run: |
-          echo "$BASE64// /" | base64 --decode | jq > gcp-credentials.json
 
       - name: fetch and write to BQ # run test.py
         run: python test.py
