@@ -40,11 +40,10 @@ def write_to_playlist(token, track_uris, playlist_id):
 
 # Write dataframe to BigQuery
 def write_to_bq(df, table_id, project_id, if_exists='replace', table_schema=None):
-
-    # keyfile = get_keyfile()
     try:
-        credentials = service_account.Credentials.from_service_account_file(
-            'gcp-credentials.json',
+        keyfile = get_keyfile()
+        credentials = service_account.Credentials.from_service_account_info(           
+            keyfile,
         )
     except ValueError as e:
         logging.info(f"Invalid credentials...")
