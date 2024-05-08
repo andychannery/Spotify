@@ -33,18 +33,19 @@ def get_token():
         "client_secret": os.getenv("CLIENT_SECRET"),
     }
 
-    response = requests.post(url, data=request_body)
-    new_token_info = response.json()
+    try:
+        response = requests.post(url, data=request_body)
+        new_token_info = response.json()
 
-    dotenv_file = dotenv.find_dotenv()
-    dotenv.load_dotenv(dotenv_file)
+        dotenv_file = dotenv.find_dotenv()
+        dotenv.load_dotenv(dotenv_file)
 
-    print(f"Response: {response}")
+        os.environ["ACCESS_TOKEN"] = new_token_info['access_token']
 
-    os.getenv["ACCESS_TOKEN"] = new_token_info['access_token']
-
-    # Write changes to .env file.
-    dotenv.set_key(dotenv_file, "ACCESS_TOKEN", os.environ["ACCESS_TOKEN"])
+        # Write changes to .env file.
+        dotenv.set_key(dotenv_file, "ACCESS_TOKEN", os.environ["ACCESS_TOKEN"])
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh.args[0]}")
 
     return new_token_info['access_token']
 
