@@ -35,8 +35,7 @@ def main():
                             ["TRACKS", "TRACK_FEATURES", "ARTISTS"]):
             logging.info(f"Writing RAW.{playlist}_{item} to BigQuery...")
             write_to_bq(df,                  
-                table_id=f"RAW.{playlist}_{item}",
-                # credentials_path="gcp-credentials.json",
+                table_id=f"RAW.{playlist}_{item}",                
                 project_id=os.getenv("PROJECT_ID"), 
                 if_exists='replace')
 
