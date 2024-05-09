@@ -37,7 +37,7 @@ def write_to_playlist(token, track_uris, playlist_id):
     logging.info(f"Status code: {response.status_code}")
 
 # Write dataframe to BigQuery
-def write_to_bq(df, table_id, project_id, if_exists='replace', table_schema=None):
+def write_to_bq(df, table_id, if_exists='replace', table_schema=None):
     # Service account authentication
     try:
         keyfile = get_keyfile()
@@ -48,7 +48,7 @@ def write_to_bq(df, table_id, project_id, if_exists='replace', table_schema=None
         logging.info(f"Invalid credentials...")
         logging.info(f"Message: {e}")
 
-    logging.info(f"Writing to {project_id}.{table_id}...")
+    logging.info(f"Writing to {table_id}...")
     # Write dataframe to BigQuery
     try:
         if not table_schema:
