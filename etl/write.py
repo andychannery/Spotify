@@ -5,9 +5,7 @@ import requests
 from google.oauth2 import service_account
 # reading data
 import json
-import pandas as pd
 import pandas_gbq
-import base64
 # debugging
 import logging
 
