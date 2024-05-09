@@ -27,13 +27,15 @@ on:
         required: true
       
 env:
+  CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
   DISCOVER_WEEKLY_ID: ${{ secrets.DISCOVER_WEEKLY_ID }}
   PERSONAL_PLAYLIST_ID: ${{ secrets.PERSONAL_PLAYLIST_ID }}
   LIKE_PLAYLIST_ID: ${{ secrets.LIKE_PLAYLIST_ID }}
   DISLIKE_PLAYLIST_ID: ${{ secrets.DISLIKE_PLAYLIST_ID }}
   PREDICTED_LIKE_ID: ${{ secrets.PREDICTED_LIKE_ID }}
-  PREDICTED_DISLIKE_ID: ${{ secrets.PREDICTED_DISLIKE_ID }}
-  REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+  PREDICTED_DISLIKE_ID: ${{ secrets.PREDICTED_DISLIKE_ID }}  
   TYPE: ${{ secrets.TYPE }}
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
