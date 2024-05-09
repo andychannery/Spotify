@@ -28,6 +28,7 @@ def get_token():
     try:
         response = requests.post(url, data=request_body)
         new_token_info = response.json()
+        print(response)
 
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh.args[0]}")
