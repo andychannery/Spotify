@@ -38,6 +38,7 @@ def write_to_playlist(token, track_uris, playlist_id):
 
 # Write dataframe to BigQuery
 def write_to_bq(df, table_id, project_id, if_exists='replace', table_schema=None):
+    # Service account authentication
     try:
         keyfile = get_keyfile()
         credentials = service_account.Credentials.from_service_account_info(           
