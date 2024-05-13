@@ -27,8 +27,8 @@ def main():
         
         # fetch playlist data        
         playlist_tracks = get_playlist_tracks(token, playlist_id)
-        playlist_track_features = get_track_features(token, ','.join(playlist_tracks.track_id.to_list()))        
-        playlist_artists = get_artist_attribute(token, ','.join(playlist_tracks.artist_id.to_list()))
+        playlist_track_features = get_track_features(token, playlist_tracks.track_id.to_list())        
+        playlist_artists = get_artist_attribute(token, playlist_tracks.artist_id.to_list())
 
         # write playlist data to BigQuery
         for df, item in zip([playlist_tracks, playlist_track_features, playlist_artists],                             
