@@ -20,7 +20,7 @@ def main():
     
     # fetch playlists from Spotify then write directly to BigQuery
     token = get_token()
-    playlists = ["LIKE_PLAYLIST", "DISLIKE_PLAYLIST", "DISCOVER_WEEKLY"]
+    playlists = ["LIKE_PLAYLIST", "DISLIKE_PLAYLIST", "DISCOVER_WEEKLY", "PERSONAL_PLAYLIST"]
     
     for playlist in playlists:
         playlist_id = os.getenv(playlist + "_ID")

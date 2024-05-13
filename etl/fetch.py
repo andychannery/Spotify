@@ -20,6 +20,7 @@ def get_playlist_tracks(token, playlist_id):
     '''
     Given a playlist_id, returns a pandas dataframe with the following attributes:
         - artist id
+        - track id
         - track name
         - track popularity rating (0-100)
     '''
@@ -83,7 +84,7 @@ def get_artist_attribute(token, artist_id):
     - popularity
     '''        
     headers = get_auth_header(token)
-    artists = artist_id.split(',')
+    artists = ','.join(artist_id).split(',') # to handle multiple artists per track
     chunks = ((len(artists) - 1) // 50) + 1
     final_result = []    
     offset = 50
@@ -117,11 +118,12 @@ def get_artist_attribute(token, artist_id):
 # Returns DataFrame of track features
 def get_track_features(token, track_ids):
     '''
-    Given track(s) ids, returns a pandas dataframe with the track_id and the track(s)' features:
+    Given a list of track(s) ids, returns a pandas dataframe with the track_id and the track(s)' features:
     - track_id
     '''    
     headers = get_auth_header(token)    
-    tracks = track_ids.split(',')
+    # tracks = track_ids.split(',')
+    tracks = ','.join(track_ids).split(',')
     chunks = ((len(tracks) - 1) // 50) + 1
     final_result = []
     offset = 50
@@ -146,3 +148,13 @@ def get_track_features(token, track_ids):
     
     # json to pandas dataframe    
     return df
+
+# Returns a list of track uris
+def get_track_uris(token, track_ids):
+    '''
+    Given a list of track ids, returns a list of uris corresponding to each track id
+    '''    
+    track_features = get_track_features(token, track_ids)
+    logging.info("Fetching track uris...")
+    uris = track_features['uri'].tolist()
+    return uris
