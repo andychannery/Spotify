@@ -61,6 +61,11 @@ def remove_from_playlist(token, track_ids, playlist_id):
     chunks = ((len(track_ids) - 1) // offset) + 1
 
     logging.info("Removing tracks from playlist...")
+    
+    if len(track_ids) == 0:
+        logging.info("No tracks to remove from playlist...")
+        return
+    
     for _ in range(chunks):
         ids = track_ids[ctr:ctr+offset]
         track_uris = get_track_uris(token, ids)

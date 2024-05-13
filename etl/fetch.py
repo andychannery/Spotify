@@ -57,6 +57,7 @@ def get_playlist_tracks(token, playlist_id):
 
     if not final_result:
         logging.info("There are no songs in this playlist...")
+        return pd.DataFrame(columns=["artist_id", "track_id", "track_name", "popularity"])
 
     # json to pandas dataframe
     df = pd.json_normalize(final_result)
