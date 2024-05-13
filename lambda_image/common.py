@@ -163,7 +163,7 @@ def get_discover_weekly():
     discover_weekly = get_playlist_tracks(token, discover_weekly_id)
     
     # get audio features for discover weekly tracks
-    track_ids = ','.join(discover_weekly.track_id.to_list())
+    track_ids = discover_weekly.track_id.to_list()
     track_features = get_track_features(token, track_ids).drop(columns=['analysis_url', 'track_href', 'type'])
 
     # Build final dataframe
